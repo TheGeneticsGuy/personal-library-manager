@@ -8,7 +8,13 @@ import eslintConfigPrettier from 'eslint-config-prettier'; // Config to turn off
 
 export default [
   {
-    ignores: ['node_modules/', 'dist/'],
+    ignores: [
+      'node_modules/',
+      'dist/',
+      'swagger.json',
+      'swagger.cjs',
+      'seeders/',
+    ],
   },
 
   {
