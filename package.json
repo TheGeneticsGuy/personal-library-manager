@@ -13,6 +13,9 @@
     "swagger": "node ./swagger.cjs",
     "seed": "node --loader ts-node/esm ./seeders/seed.ts"
   },
+  "engines": {
+    "node": "20.x"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

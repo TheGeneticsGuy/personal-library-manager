@@ -4,6 +4,7 @@
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "outDir": "./dist",
+    "rootDir": "./src",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
@@ -12,12 +13,12 @@
     "sourceMap": true
   },
   "include": [
-    "src/**/*",
-    "seeders/**/*"
+    "src/**/*"
   ],
   "exclude": [
     "node_modules",
     "**/*.spec.ts",
-    "dist"
+    "dist",
+    "seeders"
   ]
 }
