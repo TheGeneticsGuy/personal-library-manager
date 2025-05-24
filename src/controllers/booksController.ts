@@ -58,7 +58,13 @@ export const createBook = async (
       newBookData.publishedYear = Number(publishedYear);
 
     const book = await Book.create(newBookData);
-    res.status(201).json(book);
+
+    // Response text - just report a few items
+    res.status(201).json({
+      id: book._id,
+      title: book.title,
+      author: book.author,
+    });
   } catch (error: any) {
     if (error.name === 'ValidationError') {
       const messages = Object.values(error.errors).map(
@@ -96,8 +102,8 @@ export const getAllBooks = async (
   }
 };
 
-export const getBookById = () => {};
+export const getBookById = () => { };
 
-export const updateBook = () => {};
+export const updateBook = () => { };
 
-export const deleteBook = () => {};
+export const deleteBook = () => { };
