@@ -20,3 +20,27 @@ Content-Type: application/json
   "isbn": "978-0609807255",
   "publishedYear": "2000"
 }
+
+## DEPLOYMENT TESTING ##
+
+### Get Welcome
+GET https://personal-library-manager-cavh.onrender.com/
+
+### Get All books
+GET https://personal-library-manager-cavh.onrender.com/books
+
+### POST - Create a new book
+POST https://personal-library-manager-cavh.onrender.com/books
+Content-Type: application/json
+
+{
+  "title": "Stand for Something: 10 Neglected Virtues That Will Heal Our Hearts and Homes",
+  "author": "Gordon B. Hinckley",
+  "genre": "Religious",
+  "status": "To Read",
+  "pages": "176",
+  "currentPage": "0",
+  "coverImageUrl": "https://example.com/standforsomething.jpg",
+  "isbn": "978-0609807255",
+  "publishedYear": "2000"
+}

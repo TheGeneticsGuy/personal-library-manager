@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "https://personal-library-manager-cavh.onrender.com/",
+      "url": "http://localhost:3000/",
       "description": "Development server"
     }
   ],
@@ -107,6 +107,74 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/books/{id}": {
+      "get": {
+        "tags": [
+          "Books"
+        ],
+        "summary": "Get a Specific Book by ID",
+        "description": "Retrieve a book from the entire collection by the specific book ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Books"
+        ],
+        "summary": "Update a Book by ID",
+        "description": "Update 1 or all properties of a specific book, by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Books"
+        ],
+        "summary": "Delete a Book by ID",
+        "description": "Delete a specific book, by ID, from the entire book collection",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
           }
         }
       }

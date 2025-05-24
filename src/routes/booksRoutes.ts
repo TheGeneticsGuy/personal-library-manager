@@ -2,9 +2,9 @@ import express from 'express';
 import {
   createBook,
   getAllBooks,
-  // getBookById, // To be added
-  // updateBook,  // To be added
-  // deleteBook   // To be added
+  getBookById,
+  updateBook,
+  deleteBook,
 } from '../controllers/booksController.js';
 
 // Placeholder for authentication middleware - not sure how to do this YET, but as per assignment... will be done in the next 4 weeks
@@ -28,9 +28,25 @@ router
     // #swagger.description = 'Retrieves a list of all books for the current user.'
     getAllBooks
   );
-// router.route('/:id')
-//   .get(getBookById)    // GET /books/:id
-//   .put(updateBook)     // PUT /books/:id
-//   .delete(deleteBook); // DELETE /books/:id
+router
+  .route('/:id')
+  .get(
+    // #swagger.tags = ['Books']
+    // #swagger.summary = 'Get a Specific Book by ID'
+    // #swagger.description = 'Retrieve a book from the entire collection by the specific book ID'
+    getBookById
+  )
+  .put(
+    // #swagger.tags = ['Books']
+    // #swagger.summary = 'Update a Book by ID'
+    // #swagger.description = 'Update 1 or all properties of a specific book, by ID'
+    updateBook
+  )
+  .delete(
+    // #swagger.tags = ['Books']
+    // #swagger.summary = 'Delete a Book by ID'
+    // #swagger.description = 'Delete a specific book, by ID, from the entire book collection'
+    deleteBook
+  );
 
 export default router;

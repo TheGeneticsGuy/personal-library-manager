@@ -95,3 +95,9 @@ export const getAllBooks = async (
     next(error);
   }
 };
+
+export const getBookById = () => {};
+
+export const updateBook = () => {};
+
+export const deleteBook = () => {};
