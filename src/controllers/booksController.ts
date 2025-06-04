@@ -174,7 +174,7 @@ export const updateBook = asyncHandler(async (req: Request, res: Response) => {
     }
   }
 
-  res.status(200).json({
+  res.status(204).json({
     message: 'Book updated successfully',
     data: updatedBook,
   });

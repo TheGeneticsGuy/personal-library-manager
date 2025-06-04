@@ -124,7 +124,7 @@
           }
         ],
         "responses": {
-          "200": {
+          "204": {
             "description": "Book updated successfully."
           },
           "400": {

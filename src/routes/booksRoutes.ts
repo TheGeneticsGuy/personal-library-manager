@@ -84,7 +84,7 @@ router
             }
         }
     } */
-    // #swagger.responses[200] = { description: 'Book updated successfully.' }
+    // #swagger.responses[204] = { description: 'Book updated successfully.' }
     // #swagger.responses[400] = { description: 'Invalid input or ID format.' }
     // #swagger.responses[404] = { description: 'Book not found.' }
     // #swagger.responses[422] = { description: 'Unprocessable Entity' }
