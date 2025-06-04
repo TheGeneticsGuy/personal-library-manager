@@ -95,6 +95,7 @@ const seedData = async () => {
         pages: 281,
         rating: 4,
         review: 'A powerful and moving story.',
+        coverImageUrl: 'https://example.com/to_kill_a_mockingbird.jpg',
         isbn: '978-0061120084',
         publishedYear: 1960,
       },

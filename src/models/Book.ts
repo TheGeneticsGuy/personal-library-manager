@@ -42,7 +42,7 @@ const bookSchema = new Schema<IBook>(
       type: String,
       required: true,
       enum: {
-        values: ['To Read', 'Reading', 'Read', 'On Hold', 'Dropped'],
+        values: ['To Read', 'Reading', 'Finished', 'On Hold', 'Dropped'],
         message: '{VALUE} is not a supported status.',
       },
       default: 'To Read',

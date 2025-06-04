@@ -10,3 +10,6 @@
 * Prettier
 * ESLint
 * Swagger UI Express (using Swagger auto-gen)
+* Express Error Checking
+* Express Validator
+* MongoDB with Mongoose

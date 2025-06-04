@@ -1,11 +1,13 @@
-// src/app.ts
-console.log('--- src/app.ts --- TOP');
-import express, { Express, Request, Response, NextFunction } from 'express';
+import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import fs from 'fs';
 import path from 'path';
 import swaggerUi from 'swagger-ui-express';
 import bookRoutes from './routes/booksRoutes.js';
+import {
+  globalErrorHandler,
+  notFoundHandler,
+} from './middleware/errorHandler.js';
 
 dotenv.config();
 const app: Express = express();
@@ -28,11 +30,10 @@ app.get('/', (req: Request, res: Response) => {
 // Books Route
 app.use('/books', bookRoutes);
 
-// Basic error handling for now, this will be expanded upon for 404, etc..
-// PLACEHOLDER - I WILL EXPAND THIS LATER!!!
-app.use((err: Error, req: Request, res: Response, _next: NextFunction) => {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
-});
+// 404 Handler - After all SPECIFIC routes
+app.use(notFoundHandler);
+
+// Global Error Handler - Always the very last middlewar
+app.use(globalErrorHandler);
 
 export default app;

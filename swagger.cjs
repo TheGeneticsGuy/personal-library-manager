@@ -14,7 +14,7 @@ const doc = {
 
     servers: [
         {
-            url: 'http://localhost:3000/', // I will update this for RENDER URL once I have
+            url: 'http://localhost:3000/', //
             description: 'Development server'
         },
     ],
@@ -27,12 +27,10 @@ const doc = {
             Book: {
                 type: 'object',
                 properties: {
-                    _id: { type: 'string', readOnly: true, example: '60c72b9f9b1d8c001f8e4a9a' },
-                    userId: { type: 'string', readOnly: true, example: '60c72b9f9b1d8c001f8e4b9b' },
                     title: { type: 'string', example: 'The Great Gatsby' },
                     author: { type: 'string', example: 'F. Scott Fitzgerald' },
                     genre: { type: 'string', example: 'Classic' },
-                    status: { type: 'string', enum: ['To Read', 'Reading', 'Read', 'On Hold', 'Dropped'], example: 'To Read' },
+                    status: { type: 'string', enum: ['To Read', 'Reading', 'Finished', 'On Hold', 'Dropped'], example: 'To Read' },
                     pages: { type: 'integer', example: 180 },
                     currentPage: { type: 'integer', example: 50 },
                     rating: { type: 'integer', min: 1, max: 5, example: 4 },
@@ -40,9 +38,44 @@ const doc = {
                     coverImageUrl: { type: 'string', format: 'url', example: 'https://example.com/cover.jpg' },
                     isbn: { type: 'string', example: '978-0743273565' },
                     publishedYear: { type: 'integer', example: 1925 },
-                    createdAt: { type: 'string', format: 'date-time', readOnly: true },
-                    updatedAt: { type: 'string', format: 'date-time', readOnly: true },
-                }
+                },
+                required: [
+                "title",
+                "author"
+                ],
+            },
+            BookInput: {
+                type: 'object',
+                properties: {
+                    title: { type: 'string', example: 'Book Date' },
+                    author: { type: 'string', example: 'F. Scott Fitzgerald' },
+                    genre: { type: 'string', example: 'Classic' },
+                    status: { type: 'string', enum: ['To Read', 'Reading', 'Finished', 'On Hold', 'Dropped'], example: 'To Read' },
+                    pages: { type: 'integer', example: 180 },
+                    currentPage: { type: 'integer', example: 50 },
+                    rating: { type: 'integer', min: 1, max: 5, example: 4 },
+                    review: { type: 'string', example: 'A timeless classic...' },
+                    coverImageUrl: { type: 'string', format: 'url', example: 'https://example.com/cover.jpg' },
+                    isbn: { type: 'string', example: '978-0743273565' },
+                    publishedYear: { type: 'integer', example: 1925 },
+                },
+                required: [
+                "title",
+                "author"
+                ],
+            },
+            BookUpdate: {
+                title: "Book Title",
+                author: "Full Name of Author",
+                genre: "Genre Category",
+                status: "To Read, Reading, Finished, On Hold, Dropped",
+                pages: 150,
+                currentPage: 0,
+                rating: 5,
+                review: "A timeless classic...",
+                coverImageUrl: "https://example.com/imageName.jpg",
+                isbn: "978-0609807255",
+                publishedYear: 2025
             },
             User: {
                 type: 'object',
@@ -57,41 +90,6 @@ const doc = {
                     profilePictureUrl: { type: 'string', format: 'url', example: 'https://example.com/profile.jpg' },
                     preferredGenres: { type: 'array', items: { type: 'string' }, example: ['Sci-Fi', 'Fantasy'] },
                     readingGoal: { type: 'integer', example: 50, minimum: 0 },
-                    createdAt: { type: 'string', format: 'date-time', readOnly: true },
-                    updatedAt: { type: 'string', format: 'date-time', readOnly: true },
-                }
-            },
-            BookInputRequired: { // For POST request body
-                type: 'object',
-                required: ['title', 'author'],
-                properties: {
-                    title: { type: 'string', example: 'The Lord of the Rings' },
-                    author: { type: 'string', example: 'J.R.R. Tolkien' },
-                    genre: { type: 'string', example: 'Fantasy' },
-                    status: { type: 'string', enum: ['To Read', 'Reading', 'Read', 'On Hold', 'Dropped'], default: 'To Read' },
-                    pages: { type: 'integer', example: 1178, minimum: 0 },
-                    currentPage: { type: 'integer', example: 0, minimum: 0 },
-                    rating: { type: 'integer', example: 5, minimum: 1, maximum: 5 },
-                    review: { type: 'string', example: 'An epic masterpiece.' },
-                    coverImageUrl: { type: 'string', format: 'url', example: 'https://example.com/lotr.jpg' },
-                    isbn: { type: 'string', example: '978-0618640157' },
-                    publishedYear: { type: 'integer', example: 1954 },
-                }
-            },
-            BookUpdateInput: { // For PUT request body (all fields optional)
-                type: 'object',
-                properties: {
-                    title: { type: 'string', example: 'The Hobbit' },
-                    author: { type: 'string', example: 'J.R.R. Tolkien' },
-                    genre: { type: 'string', example: 'Fantasy' },
-                    status: { type: 'string', enum: ['To Read', 'Reading', 'Read', 'On Hold', 'Dropped'] },
-                    pages: { type: 'integer', example: 310, minimum: 0 },
-                    currentPage: { type: 'integer', example: 150, minimum: 0 },
-                    rating: { type: 'integer', example: 4, minimum: 1, maximum: 5 },
-                    review: { type: 'string', example: 'A delightful adventure.' },
-                    coverImageUrl: { type: 'string', format: 'url', example: 'https://example.com/hobbit.jpg' },
-                    isbn: { type: 'string', example: '978-0547928227' },
-                    publishedYear: { type: 'integer', example: 1937 },
                 }
             }
         },

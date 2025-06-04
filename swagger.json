@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "https://personal-library-manager-cavh.onrender.com/",
+      "url": "http://localhost:3000/",
       "description": "Development server"
     }
   ],
@@ -40,11 +40,8 @@
         "summary": "Get all books for the user",
         "description": "Retrieves a list of all books for the current user.",
         "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "401": {
-            "description": "Unauthorized"
+          "default": {
+            "description": ""
           }
         }
       },
@@ -53,58 +50,24 @@
           "Books"
         ],
         "summary": "Create a new book",
-        "description": "Adds a new book to the user",
+        "description": "Adds a new book to the user\\'s collection.",
         "responses": {
           "201": {
-            "description": "Created"
+            "description": "Book created successfully."
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Invalid input."
           },
-          "401": {
-            "description": "Unauthorized"
+          "422": {
+            "description": "Unprocessable Entity"
           }
         },
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "title": {
-                    "example": "any"
-                  },
-                  "author": {
-                    "example": "any"
-                  },
-                  "genre": {
-                    "example": "any"
-                  },
-                  "status": {
-                    "example": "any"
-                  },
-                  "pages": {
-                    "example": "any"
-                  },
-                  "currentPage": {
-                    "example": "any"
-                  },
-                  "rating": {
-                    "example": "any"
-                  },
-                  "review": {
-                    "example": "any"
-                  },
-                  "coverImageUrl": {
-                    "example": "any"
-                  },
-                  "isbn": {
-                    "example": "any"
-                  },
-                  "publishedYear": {
-                    "example": "any"
-                  }
-                }
+                "$ref": "#/components/schemas/BookUpdate"
               }
             }
           }
@@ -129,8 +92,17 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "Added book's details."
+          },
+          "400": {
+            "description": "Invalid ID format."
+          },
+          "404": {
+            "description": "Book not found."
+          },
+          "422": {
+            "description": "Unprocessable Entity"
           }
         }
       },
@@ -147,12 +119,32 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Book ID"
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "Book updated successfully."
+          },
+          "400": {
+            "description": "Invalid input or ID format."
+          },
+          "404": {
+            "description": "Book not found."
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookUpdate"
+              }
+            }
           }
         }
       },
@@ -173,8 +165,14 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "Book deleted successfully."
+          },
+          "400": {
+            "description": "Invalid ID format."
+          },
+          "404": {
+            "description": "Book not found."
           }
         }
       }
@@ -192,40 +190,6 @@
           "properties": {
             "type": "object",
             "properties": {
-              "_id": {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "example": "string"
-                  },
-                  "readOnly": {
-                    "type": "boolean",
-                    "example": true
-                  },
-                  "example": {
-                    "type": "string",
-                    "example": "60c72b9f9b1d8c001f8e4a9a"
-                  }
-                }
-              },
-              "userId": {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "example": "string"
-                  },
-                  "readOnly": {
-                    "type": "boolean",
-                    "example": true
-                  },
-                  "example": {
-                    "type": "string",
-                    "example": "60c72b9f9b1d8c001f8e4b9b"
-                  }
-                }
-              },
               "title": {
                 "type": "object",
                 "properties": {
@@ -277,7 +241,7 @@
                     "example": [
                       "To Read",
                       "Reading",
-                      "Read",
+                      "Finished",
                       "On Hold",
                       "Dropped"
                     ],
@@ -393,25 +357,157 @@
                     "example": 1925
                   }
                 }
-              },
-              "createdAt": {
+              }
+            }
+          },
+          "required": {
+            "type": "array",
+            "example": [
+              "title",
+              "author"
+            ],
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "BookInput": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "example": "object"
+          },
+          "properties": {
+            "type": "object",
+            "properties": {
+              "title": {
                 "type": "object",
                 "properties": {
                   "type": {
                     "type": "string",
                     "example": "string"
                   },
-                  "format": {
+                  "example": {
                     "type": "string",
-                    "example": "date-time"
-                  },
-                  "readOnly": {
-                    "type": "boolean",
-                    "example": true
+                    "example": "Book Date"
                   }
                 }
               },
-              "updatedAt": {
+              "author": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "F. Scott Fitzgerald"
+                  }
+                }
+              },
+              "genre": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "Classic"
+                  }
+                }
+              },
+              "status": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "enum": {
+                    "type": "array",
+                    "example": [
+                      "To Read",
+                      "Reading",
+                      "Finished",
+                      "On Hold",
+                      "Dropped"
+                    ],
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "To Read"
+                  }
+                }
+              },
+              "pages": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "integer"
+                  },
+                  "example": {
+                    "type": "number",
+                    "example": 180
+                  }
+                }
+              },
+              "currentPage": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "integer"
+                  },
+                  "example": {
+                    "type": "number",
+                    "example": 50
+                  }
+                }
+              },
+              "rating": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "integer"
+                  },
+                  "min": {
+                    "type": "number",
+                    "example": 1
+                  },
+                  "max": {
+                    "type": "number",
+                    "example": 5
+                  },
+                  "example": {
+                    "type": "number",
+                    "example": 4
+                  }
+                }
+              },
+              "review": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "A timeless classic..."
+                  }
+                }
+              },
+              "coverImageUrl": {
                 "type": "object",
                 "properties": {
                   "type": {
@@ -420,15 +516,100 @@
                   },
                   "format": {
                     "type": "string",
-                    "example": "date-time"
+                    "example": "url"
                   },
-                  "readOnly": {
-                    "type": "boolean",
-                    "example": true
+                  "example": {
+                    "type": "string",
+                    "example": "https://example.com/cover.jpg"
+                  }
+                }
+              },
+              "isbn": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "978-0743273565"
+                  }
+                }
+              },
+              "publishedYear": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "integer"
+                  },
+                  "example": {
+                    "type": "number",
+                    "example": 1925
                   }
                 }
               }
             }
+          },
+          "required": {
+            "type": "array",
+            "example": [
+              "title",
+              "author"
+            ],
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "BookUpdate": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "Book Title"
+          },
+          "author": {
+            "type": "string",
+            "example": "Full Name of Author"
+          },
+          "genre": {
+            "type": "string",
+            "example": "Genre Category"
+          },
+          "status": {
+            "type": "string",
+            "example": "To Read, Reading, Finished, On Hold, Dropped"
+          },
+          "pages": {
+            "type": "number",
+            "example": 150
+          },
+          "currentPage": {
+            "type": "number",
+            "example": 0
+          },
+          "rating": {
+            "type": "number",
+            "example": 5
+          },
+          "review": {
+            "type": "string",
+            "example": "A timeless classic..."
+          },
+          "coverImageUrl": {
+            "type": "string",
+            "example": "https://example.com/imageName.jpg"
+          },
+          "isbn": {
+            "type": "string",
+            "example": "978-0609807255"
+          },
+          "publishedYear": {
+            "type": "number",
+            "example": 2025
           }
         }
       },
@@ -600,426 +781,6 @@
                   "minimum": {
                     "type": "number",
                     "example": 0
-                  }
-                }
-              },
-              "createdAt": {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "example": "string"
-                  },
-                  "format": {
-                    "type": "string",
-                    "example": "date-time"
-                  },
-                  "readOnly": {
-                    "type": "boolean",
-                    "example": true
-                  }
-                }
-              },
-              "updatedAt": {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "example": "string"
-                  },
-                  "format": {
-                    "type": "string",
-                    "example": "date-time"
-                  },
-                  "readOnly": {
-                    "type": "boolean",
-                    "example": true
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "BookInputRequired": {
-        "type": "object",
-        "properties": {
-          "type": {
-            "type": "string",
-            "example": "object"
-          },
-          "required": {
-            "type": "array",
-            "example": [
-              "title",
-              "author"
-            ],
-            "items": {
-              "type": "string"
-            }
-          },
-          "properties": {
-            "type": "object",
-            "properties": {
-              "title": {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "example": "string"
-                  },
-                  "example": {
-                    "type": "string",
-                    "example": "The Lord of the Rings"
-                  }
-                }
-              },
-              "author": {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "example": "string"
-                  },
-                  "example": {
-                    "type": "string",
-                    "example": "J.R.R. Tolkien"
-                  }
-                }
-              },
-              "genre": {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "example": "string"
-                  },
-                  "example": {
-                    "type": "string",
-                    "example": "Fantasy"
-                  }
-                }
-              },
-              "status": {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "example": "string"
-                  },
-                  "enum": {
-                    "type": "array",
-                    "example": [
-                      "To Read",
-                      "Reading",
-                      "Read",
-                      "On Hold",
-                      "Dropped"
-                    ],
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "default": {
-                    "type": "string",
-                    "example": "To Read"
-                  }
-                }
-              },
-              "pages": {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "example": "integer"
-                  },
-                  "example": {
-                    "type": "number",
-                    "example": 1178
-                  },
-                  "minimum": {
-                    "type": "number",
-                    "example": 0
-                  }
-                }
-              },
-              "currentPage": {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "example": "integer"
-                  },
-                  "example": {
-                    "type": "number",
-                    "example": 0
-                  },
-                  "minimum": {
-                    "type": "number",
-                    "example": 0
-                  }
-                }
-              },
-              "rating": {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "example": "integer"
-                  },
-                  "example": {
-                    "type": "number",
-                    "example": 5
-                  },
-                  "minimum": {
-                    "type": "number",
-                    "example": 1
-                  },
-                  "maximum": {
-                    "type": "number",
-                    "example": 5
-                  }
-                }
-              },
-              "review": {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "example": "string"
-                  },
-                  "example": {
-                    "type": "string",
-                    "example": "An epic masterpiece."
-                  }
-                }
-              },
-              "coverImageUrl": {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "example": "string"
-                  },
-                  "format": {
-                    "type": "string",
-                    "example": "url"
-                  },
-                  "example": {
-                    "type": "string",
-                    "example": "https://example.com/lotr.jpg"
-                  }
-                }
-              },
-              "isbn": {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "example": "string"
-                  },
-                  "example": {
-                    "type": "string",
-                    "example": "978-0618640157"
-                  }
-                }
-              },
-              "publishedYear": {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "example": "integer"
-                  },
-                  "example": {
-                    "type": "number",
-                    "example": 1954
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "BookUpdateInput": {
-        "type": "object",
-        "properties": {
-          "type": {
-            "type": "string",
-            "example": "object"
-          },
-          "properties": {
-            "type": "object",
-            "properties": {
-              "title": {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "example": "string"
-                  },
-                  "example": {
-                    "type": "string",
-                    "example": "The Hobbit"
-                  }
-                }
-              },
-              "author": {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "example": "string"
-                  },
-                  "example": {
-                    "type": "string",
-                    "example": "J.R.R. Tolkien"
-                  }
-                }
-              },
-              "genre": {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "example": "string"
-                  },
-                  "example": {
-                    "type": "string",
-                    "example": "Fantasy"
-                  }
-                }
-              },
-              "status": {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "example": "string"
-                  },
-                  "enum": {
-                    "type": "array",
-                    "example": [
-                      "To Read",
-                      "Reading",
-                      "Read",
-                      "On Hold",
-                      "Dropped"
-                    ],
-                    "items": {
-                      "type": "string"
-                    }
-                  }
-                }
-              },
-              "pages": {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "example": "integer"
-                  },
-                  "example": {
-                    "type": "number",
-                    "example": 310
-                  },
-                  "minimum": {
-                    "type": "number",
-                    "example": 0
-                  }
-                }
-              },
-              "currentPage": {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "example": "integer"
-                  },
-                  "example": {
-                    "type": "number",
-                    "example": 150
-                  },
-                  "minimum": {
-                    "type": "number",
-                    "example": 0
-                  }
-                }
-              },
-              "rating": {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "example": "integer"
-                  },
-                  "example": {
-                    "type": "number",
-                    "example": 4
-                  },
-                  "minimum": {
-                    "type": "number",
-                    "example": 1
-                  },
-                  "maximum": {
-                    "type": "number",
-                    "example": 5
-                  }
-                }
-              },
-              "review": {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "example": "string"
-                  },
-                  "example": {
-                    "type": "string",
-                    "example": "A delightful adventure."
-                  }
-                }
-              },
-              "coverImageUrl": {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "example": "string"
-                  },
-                  "format": {
-                    "type": "string",
-                    "example": "url"
-                  },
-                  "example": {
-                    "type": "string",
-                    "example": "https://example.com/hobbit.jpg"
-                  }
-                }
-              },
-              "isbn": {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "example": "string"
-                  },
-                  "example": {
-                    "type": "string",
-                    "example": "978-0547928227"
-                  }
-                }
-              },
-              "publishedYear": {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "type": "string",
-                    "example": "integer"
-                  },
-                  "example": {
-                    "type": "number",
-                    "example": 1937
                   }
                 }
               }

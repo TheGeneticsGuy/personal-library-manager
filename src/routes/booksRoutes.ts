@@ -6,6 +6,11 @@ import {
   updateBook,
   deleteBook,
 } from '../controllers/booksController.js';
+import {
+  createBookValidationRules,
+  updateBookValidationRules,
+  validateRequest,
+} from '../middleware/bookValidation.js';
 
 // Placeholder for authentication middleware - not sure how to do this YET, but as per assignment... will be done in the next 4 weeks
 // import { protect } from '../middleware/authMiddleware'; // I'll create this later
@@ -19,33 +24,81 @@ router
   .post(
     // #swagger.tags = ['Books']
     // #swagger.summary = 'Create a new book'
-    // #swagger.description = 'Adds a new book to the user's collection.'
+    // #swagger.description = 'Adds a new book to the user\'s collection.'
+    /* #swagger.requestBody = {
+        required: true,
+        content: {
+            "application/json": {
+                schema: {
+                    $ref: "#/components/schemas/BookUpdate"
+                }
+            }
+        }
+    } */
+    // #swagger.responses[201] = { description: 'Book created successfully.' }
+    // #swagger.responses[400] = { description: 'Invalid input.' }
+    createBookValidationRules(),
+    validateRequest,
     createBook
   )
   .get(
     // #swagger.tags = ['Books']
     // #swagger.summary = 'Get all books for the user'
     // #swagger.description = 'Retrieves a list of all books for the current user.'
+    // #swagger.responses[200] = { description: 'A list of books in user\'s collection.')
     getAllBooks
   );
+
+// Ok, let's move on to BY ID API0
 router
   .route('/:id')
   .get(
     // #swagger.tags = ['Books']
     // #swagger.summary = 'Get a Specific Book by ID'
     // #swagger.description = 'Retrieve a book from the entire collection by the specific book ID'
+    // #swagger.responses[200] = { description: 'Added book\'s details.' }
+    // #swagger.responses[400] = { description: 'Invalid ID format.' }
+    // #swagger.responses[404] = { description: 'Book not found.' }
+    // #swagger.responses[422] = { description: 'Unprocessable Entity' }
     getBookById
   )
   .put(
     // #swagger.tags = ['Books']
     // #swagger.summary = 'Update a Book by ID'
     // #swagger.description = 'Update 1 or all properties of a specific book, by ID'
+    /* #swagger.parameters['id'] = {
+        in: 'path',
+        description: 'Book ID',
+        required: true,
+        schema: {
+            type: 'string'
+        }
+    } */
+    /* #swagger.requestBody = {
+        required: true,
+        content: {
+            "application/json": {
+                schema: {
+                    $ref: "#/components/schemas/BookUpdate"
+                }
+            }
+        }
+    } */
+    // #swagger.responses[200] = { description: 'Book updated successfully.' }
+    // #swagger.responses[400] = { description: 'Invalid input or ID format.' }
+    // #swagger.responses[404] = { description: 'Book not found.' }
+    // #swagger.responses[422] = { description: 'Unprocessable Entity' }
+    updateBookValidationRules(),
+    validateRequest,
     updateBook
   )
   .delete(
     // #swagger.tags = ['Books']
     // #swagger.summary = 'Delete a Book by ID'
     // #swagger.description = 'Delete a specific book, by ID, from the entire book collection'
+    /* #swagger.responses[200] = { description: 'Book deleted successfully.' } */
+    /* #swagger.responses[400] = { description: 'Invalid ID format.' } */
+    /* #swagger.responses[404] = { description: 'Book not found.' } */
     deleteBook
   );
 
