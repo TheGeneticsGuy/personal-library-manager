@@ -14,7 +14,7 @@ const doc = {
 
     servers: [
         {
-            url: 'http://localhost:3000/', //
+            url: 'https://personal-library-manager-cavh.onrender.com/', //
             description: 'Development server'
         },
     ],
