@@ -3,19 +3,11 @@ import { Types } from 'mongoose';
 import Book, { IBook } from '../models/Book.js';
 import { asyncHandler } from '../middleware/errorHandler.js';
 import HttpError from '../utils/HttpError.js';
-
-const getUserIdFromRequest = (_req: Request): Types.ObjectId | null => {
-  return new Types.ObjectId('6831580fae7dfb1c639688a4'); // From the Seed import - placeholder for now
-};
+import { IUser } from '../models/User.js';
 
 export const createBook = asyncHandler(async (req: Request, res: Response) => {
-  const userId = getUserIdFromRequest(req);
-
-  if (!userId) {
-    throw new HttpError(401, 'User is not found or not assigned.');
-    // Can't add a book to no one. These are books being added to user profiles
-    // and so a userId needs to be verified/authenticated first.
-  }
+  const user = req.user as IUser;
+  const userId = user._id;
 
   const {
     title,
@@ -36,7 +28,7 @@ export const createBook = asyncHandler(async (req: Request, res: Response) => {
   }
 
   const newBookData: Partial<IBook> = {
-    userId,
+    userId: new Types.ObjectId(userId),
     title,
     author,
   };
@@ -67,7 +59,9 @@ export const createBook = asyncHandler(async (req: Request, res: Response) => {
 
 // For the Get Route
 export const getAllBooks = asyncHandler(async (req: Request, res: Response) => {
-  const userId = getUserIdFromRequest(req);
+  const user = req.user as IUser;
+  const userId = user._id;
+
   const books = await Book.find({ userId: userId });
 
   res.status(200).json({
@@ -79,7 +73,8 @@ export const getAllBooks = asyncHandler(async (req: Request, res: Response) => {
 
 // Get by ID Route
 export const getBookById = asyncHandler(async (req: Request, res: Response) => {
-  const userId = getUserIdFromRequest(req);
+  const user = req.user as IUser;
+  const userId = user._id;
   const bookId = req.params.id;
 
   if (!Types.ObjectId.isValid(bookId)) {
@@ -103,7 +98,8 @@ export const getBookById = asyncHandler(async (req: Request, res: Response) => {
 
 // PUT Route
 export const updateBook = asyncHandler(async (req: Request, res: Response) => {
-  const userId = getUserIdFromRequest(req);
+  const user = req.user as IUser;
+  const userId = user._id;
   const bookId = req.params.id;
 
   if (!Types.ObjectId.isValid(bookId)) {
@@ -182,7 +178,8 @@ export const updateBook = asyncHandler(async (req: Request, res: Response) => {
 
 // DELETE route
 export const deleteBook = asyncHandler(async (req: Request, res: Response) => {
-  const userId = getUserIdFromRequest(req);
+  const user = req.user as IUser;
+  const userId = user._id;
   const bookId = req.params.id;
 
   if (!Types.ObjectId.isValid(bookId)) {

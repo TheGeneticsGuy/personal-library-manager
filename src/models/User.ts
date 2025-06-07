@@ -1,6 +1,7 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model, Document, Types } from 'mongoose';
 
 export interface IUser extends Document {
+  _id: Types.ObjectId;
   oauthId: string; // ID from the OAuth provider (like Google or Github or Facebook, and  so on)
   oauthProvider: string; // Just the name, like GOogle
   email: string; // From OAuth (this also should be unique)

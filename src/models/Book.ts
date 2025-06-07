@@ -1,6 +1,7 @@
 import { Schema, model, Document, Types } from 'mongoose';
 
 export interface IBook extends Document {
+  _id: Types.ObjectId;
   userId: Types.ObjectId; // Reference to the User who owns this book
   title: string;
   author: string;

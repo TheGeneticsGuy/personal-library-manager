@@ -11,13 +11,14 @@ import {
   updateBookValidationRules,
   validateRequest,
 } from '../middleware/bookValidation.js';
-
-// Placeholder for authentication middleware - not sure how to do this YET, but as per assignment... will be done in the next 4 weeks
-// import { protect } from '../middleware/authMiddleware'; // I'll create this later
+import { ensureAuthenticated } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-// --- ALL BOOK ROUTES ---
+// PROTECTING ALL BOOK ROUTES!!!
+router.use(ensureAuthenticated);
+
+// ALL BOOK ROUTES
 
 router
   .route('/')
@@ -49,7 +50,7 @@ router
     getAllBooks
   );
 
-// Ok, let's move on to BY ID API0
+// Ok, let's move on to BY ID API
 router
   .route('/:id')
   .get(

@@ -2,6 +2,7 @@ import { body, validationResult } from 'express-validator';
 import Book from '../models/Book.js';
 import { Request, Response, NextFunction } from 'express';
 import { Types } from 'mongoose';
+import { IUser } from '../models/User.js';
 
 // Helper for user ID until I update the whole create User process
 const getUserIdFromRequest = (_req: any): Types.ObjectId => {
@@ -48,11 +49,40 @@ export const createBookValidationRules = () => {
       .optional()
       .isInt({ min: 0 })
       .withMessage('Current page must be a non-negative integer.')
-      .custom((value, { req }) => {
-        if (req.body.pages !== undefined && value > req.body.pages) {
+      .custom(async (value, { req }) => {
+        const bookId = (req as Request).params?.id;
+        const pagesProvided = (req as Request).body.pages;
+        let totalPages: number | undefined =
+          pagesProvided !== undefined ? Number(pagesProvided) : undefined;
+
+        // ensureAuthenticated middleware ran
+        const user = (req as Request).user as IUser;
+        if (!user || !user._id) {
           throw new Error(
-            'Current page cannot exceed total pages of the book.'
+            'User not authenticated. Cannot validate current page.'
           );
+        }
+        const userId = user._id;
+
+        // If pages missing from request, let's get them
+        if (
+          pagesProvided === undefined &&
+          bookId &&
+          Types.ObjectId.isValid(bookId)
+        ) {
+          const existingBook = await Book.findOne({
+            _id: new Types.ObjectId(bookId),
+            userId: new Types.ObjectId(userId),
+          })
+            .select('pages')
+            .lean();
+          if (existingBook && existingBook.pages !== undefined) {
+            totalPages = existingBook.pages;
+          }
+        }
+
+        if (totalPages !== undefined && Number(value) > totalPages) {
+          throw new Error('Current page cannot exceed total pages.');
         }
         return true;
       }),

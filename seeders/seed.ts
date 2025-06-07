@@ -35,14 +35,15 @@ const seedData = async () => {
 
     // 1. Create a Test User
     console.log('Creating test user...');
+
     const testUser = await User.create({
       oauthId: 'testuser001',
-      oauthProvider: 'local-test',
-      email: 'testuser@example.com',
-      displayName: 'Test User',
-      preferredGenres: ['Fantasy', 'Sci-Fi'],
+      oauthProvider: 'google',
+      email: 'aaronjtopping@gmail.com',
+      displayName: 'Test User (Google)',
       readingGoal: 25,
     });
+
     console.log(`Test user created with ID: ${testUser._id}`);
     console.log(`User ID: ${testUser.oauthId.toString()}`);
     console.log('----------------------------------------------------');

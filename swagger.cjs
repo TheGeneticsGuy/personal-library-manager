@@ -88,7 +88,6 @@ const doc = {
                     firstName: { type: 'string', example: 'John' },
                     lastName: { type: 'string', example: 'Doe' },
                     profilePictureUrl: { type: 'string', format: 'url', example: 'https://example.com/profile.jpg' },
-                    preferredGenres: { type: 'array', items: { type: 'string' }, example: ['Sci-Fi', 'Fantasy'] },
                     readingGoal: { type: 'integer', example: 50, minimum: 0 },
                 }
             }
