@@ -14,13 +14,14 @@ const doc = {
 
     servers: [
         {
-            url: 'https://personal-library-manager-cavh.onrender.com/', //
+            url: 'http://localhost:3000/', //
             description: 'Development server'
         },
     ],
     tags: [
-        { name: 'Books', description: 'Books management' },
-        { name: 'Users', description: 'Authentication (Passport Google OAuth2)' }
+        { name: 'General', description: 'General API endpoints'},
+        { name: 'Authentication', description: 'User authentication and session management' },
+        { name: 'Books', description: 'Books management' }
     ],
     components: {
         schemas: {

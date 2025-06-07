@@ -55,6 +55,8 @@ app.use(passport.session()); // Enables persistent login with express-sessions
 // ROUTES
 // Welcome Route
 app.get('/', (req: Request, res: Response) => {
+  // #swagger.tags = ['General']
+  // #swagger.summary = 'API Welcome Message'
   res.send('Welcome to the Personal Library Manager API for CSE 341!');
 });
 

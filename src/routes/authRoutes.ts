@@ -4,22 +4,22 @@ import { IUser } from '../models/User.js';
 
 const router = express.Router();
 
-// #swagger.tags = ['Authentication (Passport Google OAuth2)']
-// #swagger.summary = 'Initiate Google OAuth login'
-// #swagger.description = 'Redirects the user to Google for authentication.'
-// #swagger.responses[302] = { description: 'Redirect to Google OAuth server.' }
 router.get(
+  // #swagger.tags = ['Authentication']
+  // #swagger.summary = 'Initiate Google OAuth login'
+  // #swagger.description = 'Redirects the user to Google for authentication.'
+  // #swagger.responses[302] = { description: 'Redirect to Google OAuth server.' }
   '/google',
   passport.authenticate('google', { scope: ['profile', 'email'] })
   // I had to setup the "scope" in the Google Cloud config to include profile/email
 );
 
-// Google OAuth callback route
-// #swagger.summary = 'Google OAuth callback'
-// #swagger.description = 'Callback URL for Google to redirect to after authentication. Handles login/signup and session creation.'
-// #swagger.responses[200] = { description: 'Login successful.', schema: { type: 'object', properties: { message: { type: 'string' }, user: { $ref: "#/components/schemas/User" } } } }
-// #swagger.responses[401] = { description: 'Authentication failed.' }
 router.get(
+  // #swagger.tags = ['Authentication']
+  // #swagger.summary = 'Google OAuth callback'
+  // #swagger.description = 'Callback URL for Google to redirect to after authentication. Handles login/signup and session creation.'
+  // #swagger.responses[200] = { description: 'Login successful.', schema: { type: 'object', properties: { message: { type: 'string' }, user: { $ref: "#/components/schemas/User" } } } }
+  // #swagger.responses[401] = { description: 'Authentication failed.' }
   '/google/callback',
   passport.authenticate('google', {
     failureRedirect: '/auth/login-failed', // Where to redirect if auth fails - Future webpage
@@ -39,11 +39,12 @@ router.get(
 );
 
 // Route to check login status
-// #swagger.summary = 'Check login status'
-// #swagger.description = 'Returns the current status of authenticated user, or an unauthorized status.'
-// #swagger.responses[200] = { description: 'User is authenticated.', schema: { type: 'object', properties: { authenticated: { type: 'boolean' }, user: { $ref: "#/components/schemas/User" } } } }
-// #swagger.responses[401] = { description: 'User is not authenticated.', schema: { type: 'object', properties: { authenticated: { type: 'boolean' }, message: { type: 'string' } } } }
 router.get('/status', (req: Request, res: Response) => {
+  // #swagger.tags = ['Authentication']
+  // #swagger.summary = 'Check login status'
+  // #swagger.description = 'Returns the current status of authenticated user, or an unauthorized status.'
+  // #swagger.responses[200] = { description: 'User is authenticated.', schema: { type: 'object', properties: { authenticated: { type: 'boolean' }, user: { $ref: "#/components/schemas/User" } } } }
+  // #swagger.responses[401] = { description: 'User is not authenticated.', schema: { type: 'object', properties: { authenticated: { type: 'boolean' }, message: { type: 'string' } } } }
   if (req.isAuthenticated && req.isAuthenticated()) {
     // req.isAuthenticated() is from Passport
     res.status(200).json({
@@ -59,10 +60,11 @@ router.get('/status', (req: Request, res: Response) => {
 });
 
 // Route for failed Google login
-// #swagger.summary = 'Login failed'
-// #swagger.description = 'Endpoint for when Google OAuth login fails.'
-// #swagger.responses[401] = { description: 'Google authentication failed.', schema: { type: 'object', properties: { success: { type: 'boolean' }, message: { type: 'string' }, error: { type: 'string', 'nullable': true } } } }
 router.get('/login-failed', (req: Request, res: Response) => {
+  // #swagger.tags = ['Authentication']
+  // #swagger.summary = 'Login failed'
+  // #swagger.description = 'Endpoint for when Google OAuth login fails.'
+  // #swagger.responses[401] = { description: 'Google authentication failed.', schema: { type: 'object', properties: { success: { type: 'boolean' }, message: { type: 'string' }, error: { type: 'string', 'nullable': true } } } }
   const messages = (req.session as any)?.messages || [];
   const failureMessage =
     messages.length > 0
@@ -78,11 +80,12 @@ router.get('/login-failed', (req: Request, res: Response) => {
 });
 
 // Route for logout
-// #swagger.summary = 'Logout user'
-// #swagger.description = 'Logs out the current user and ends/destroy the session.'
-// #swagger.responses[200] = { description: 'Successfully logged out.' }
-// #swagger.responses[500] = { description: 'Logout failed.' }
 router.get('/logout', (req: Request, res: Response, next: NextFunction) => {
+  // #swagger.tags = ['Authentication']
+  // #swagger.summary = 'Logout user'
+  // #swagger.description = 'Logs out the current user and ends/destroy the session.'
+  // #swagger.responses[200] = { description: 'Successfully logged out.' }
+  // #swagger.responses[500] = { description: 'Logout failed.' }
   req.logout((err) => {
     // req.logout() - Passport API
     if (err) {
@@ -99,7 +102,7 @@ router.get('/logout', (req: Request, res: Response, next: NextFunction) => {
         });
       }
       res.clearCookie('connect.sid'); // 'connect.sid' is default session cookie
-      res.redirect('/'); // Redirect to home
+      // res.redirect('/'); // Redirect to home - maybe?
       res.status(200).json({ message: 'Successfully logged out.' });
     });
   });
