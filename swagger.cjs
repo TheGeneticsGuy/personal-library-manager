@@ -20,7 +20,7 @@ const doc = {
     ],
     tags: [
         { name: 'Books', description: 'Books management' },
-        { name: 'Users', description: 'User Profile Management (OAuth Managed)' }
+        { name: 'Users', description: 'Authentication (Passport Google OAuth2)' }
     ],
     components: {
         schemas: {

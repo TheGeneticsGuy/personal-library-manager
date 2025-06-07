@@ -7,6 +7,9 @@ import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import passport from './config/passport-setup.js';
 import bookRoutes from './routes/booksRoutes.js';
+import authRoutes from './routes/authRoutes.js';
+
+// Import my error handler
 import {
   globalErrorHandler,
   notFoundHandler,
@@ -54,6 +57,9 @@ app.use(passport.session()); // Enables persistent login with express-sessions
 app.get('/', (req: Request, res: Response) => {
   res.send('Welcome to the Personal Library Manager API for CSE 341!');
 });
+
+// Google OAuth
+app.use('/auth', authRoutes);
 
 // Books Route
 app.use('/books', bookRoutes);
