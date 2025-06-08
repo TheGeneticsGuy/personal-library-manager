@@ -18,6 +18,10 @@ import {
 dotenv.config();
 const app: Express = express();
 
+if (process.env.NODE_ENV === 'production') {
+  app.set('trust proxy', 1); // Trusting the Render Proxy - couldn't get deploy to work without this...
+}
+
 // Loading Swagger doc
 let swaggerDocument = JSON.parse(
   fs.readFileSync(path.join(process.cwd(), 'swagger.json'), 'utf8')
