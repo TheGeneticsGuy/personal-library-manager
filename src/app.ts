@@ -8,6 +8,7 @@ import MongoStore from 'connect-mongo';
 import passport from './config/passport-setup.js';
 import bookRoutes from './routes/booksRoutes.js';
 import authRoutes from './routes/authRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 
 // Import my error handler
 import {
@@ -66,6 +67,9 @@ app.get('/', (req: Request, res: Response) => {
 
 // Google OAuth
 app.use('/auth', authRoutes);
+
+// Usert Routes
+app.use('/users', userRoutes);
 
 // Books Route
 app.use('/books', bookRoutes);

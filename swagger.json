@@ -21,6 +21,10 @@
       "description": "User authentication and session management"
     },
     {
+      "name": "Users",
+      "description": "User Profile Management"
+    },
+    {
       "name": "Books",
       "description": "Books management"
     }
@@ -421,6 +425,126 @@
           },
           "500": {
             "description": "Logout failed."
+          }
+        }
+      }
+    },
+    "/users/profile": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get current user profile",
+        "description": "Retrieves the full profile of the currently authenticated user.",
+        "responses": {
+          "200": {
+            "description": "User profile retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized."
+          },
+          "404": {
+            "description": "User not found."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Update current user profile",
+        "description": "Allows the authenticated user to update their profile information.",
+        "responses": {
+          "200": {
+            "description": "User profile updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input."
+          },
+          "401": {
+            "description": "Unauthorized."
+          },
+          "404": {
+            "description": "User not found."
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "displayName": {
+                    "type": "string",
+                    "example": "Jane Doe Updated"
+                  },
+                  "firstName": {
+                    "type": "string",
+                    "example": "Jane"
+                  },
+                  "lastName": {
+                    "type": "string",
+                    "example": "Doe"
+                  },
+                  "profilePictureUrl": {
+                    "type": "string",
+                    "format": "url",
+                    "example": "https://example.com/new_profile.jpg"
+                  },
+                  "readingGoal": {
+                    "type": "integer",
+                    "example": 30,
+                    "minimum": 0
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Delete current user account",
+        "description": "Allows the authenticated user to delete their account and associated book data. This action is irreversible.",
+        "responses": {
+          "200": {
+            "description": "User account deleted successfully."
+          },
+          "401": {
+            "description": "Unauthorized."
+          },
+          "404": {
+            "description": "User not found."
           }
         }
       }
@@ -1164,6 +1288,13 @@
         "xml": {
           "name": "User"
         }
+      }
+    },
+    "securitySchemes": {
+      "cookieAuth": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "connect.sid"
       }
     }
   }

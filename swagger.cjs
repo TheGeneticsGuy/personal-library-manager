@@ -15,12 +15,14 @@ const doc = {
     servers: [
         {
             url: 'https://personal-library-manager-cavh.onrender.com/',
+            // url: 'http://localhost:3000/',
             description: 'Development server'
         },
     ],
     tags: [
         { name: 'General', description: 'General API endpoints'},
         { name: 'Authentication', description: 'User authentication and session management' },
+        { name: 'Users', description: 'User Profile Management' },
         { name: 'Books', description: 'Books management' }
     ],
     components: {
@@ -93,9 +95,13 @@ const doc = {
                 }
             }
         },
-        // securitySchemes: {
-        // //   -- PENDING
-        // }
+        securitySchemes: {
+            cookieAuth: {
+                type: 'apiKey', // Using apiKey type for cookie auth as per OpenAPI spec recommendations
+                in: 'cookie',
+                name: 'connect.sid'
+            }
+        }
     },
 };
 
