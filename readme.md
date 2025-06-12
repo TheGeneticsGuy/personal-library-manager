@@ -12,6 +12,7 @@
 [Video Demonstration of Project](https://www.youtube.com/watch?v=kxszCuG6xVE)
 
 ## Toolsets
+
 * Prettier
 * ESLint
 * Swagger UI Express (using Swagger auto-gen)
